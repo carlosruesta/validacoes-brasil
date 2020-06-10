@@ -26,10 +26,12 @@ class Cliente
     $cidade,
     $uf
   ) {
-    // validacoes
-    if (!$this->cepValido($cep)) {
-        throw new \Exception("CEP não valido");
-    }
+
+    //validação
+    if (!$this->cepValido($cep)) throw new Exception("CEP no formato inválido");
+    if (!$this->telefoneValido($telefone)) throw new Exception("Telefone no formato inválido");
+    if (!$this->emailValido($email)) throw new Exception("Email no formato inválido");
+
     $this->nome = $nome;
     $this->cpf_cnpj = $cpf_cnpj;
     $this->telefone = $telefone;
@@ -42,13 +44,34 @@ class Cliente
     $this->uf = $uf;
   }
 
-  function cepValido($cep) {
-    if (strlen($cep) != 10) {
-        return false;
+  function cepValido($cep)
+  {
+    if (strlen($cep) == 10) {
+      //22.333-333
+      $regex_cep = "/[0-9]{2}\.[0-9]{3}\-[0-9]{3}/";
+      return preg_match($regex_cep, $cep);
+    } else {
+      return false;
     }
+  }
 
-    // template cep -> 44.123-55
-    $regex_cep = "/[0-9]{2}\.[0-9]{3}\-[0-9]{2}/";
-    return preg_match($regex_cep, $cep);
+  function telefoneValido($telefone)
+  {
+    if (strlen($telefone) == 15) {
+      //(99) 99999-9999
+      $regex_telefone = "/\([0-9]{2}\)[0-9]{5}\-[0-9]{4}/";
+      return preg_match($regex_telefone, str_replace(" ", "", $telefone));
+    } else {
+      return false;
+    }
+  }
+
+  function emailValido($email)
+  {
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
