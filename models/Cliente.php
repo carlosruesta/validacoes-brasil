@@ -43,10 +43,10 @@ class Cliente
     }
 
     $this->nome = $nome;
-    $this->cpf_cnpj = $cpf_cnpj;
-    $this->telefone = $telefone;
+    $this->cpf_cnpj = $this->removeFormatacao($cpf_cnpj);
+    $this->telefone = $this->removeFormatacao($telefone);
     $this->email = $email;
-    $this->cep = $cep;
+    $this->cep = $this->removeFormatacao($cep);
     $this->endereco = $endereco;
     $this->bairro = $bairro;
     $this->numero = $numero;
@@ -85,10 +85,9 @@ class Cliente
     }
   }
 
-    function emailValidoPorExpressaoRegular($email)
-    {
-        $regExpr = "/^[a-z0-9.]+@[a-z0-9]+.[a-z]+.([a-z]+)?$/";
-
-        return preg_match($regExpr, $email);
-    }
+  function removeFormatacao($info)
+  {
+    $dado = str_replace([".", "-", "/", "(", ")", " "], "", $info);
+    return $dado;
+  }
 }
