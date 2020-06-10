@@ -74,4 +74,11 @@ class Cliente
       return false;
     }
   }
+
+    function emailValidoPorExpressaoRegular($email)
+    {
+        $regExpr = "/^[a-z0-9.]+@[a-z0-9]+.[a-z]+.([a-z]+)?$/";
+
+        return preg_match($regExpr, $email);
+    }
 }
