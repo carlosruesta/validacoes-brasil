@@ -2,7 +2,7 @@
 
 ## Configuração da aplicação no arquivo *core.php* e no *fmb-setup.global.php*
 
-##### Cake, Debug, Sessão e outros
+#### Cake, Debug, Sessão e outros
 
 **- core.php**
 
@@ -36,7 +36,7 @@
 	'api_antiga' => 'http://gabriel.fmb.sandbox/api/',
 >>>
 
-##### Login de usuários
+#### Login de usuários
 
 + **core.php**
 
