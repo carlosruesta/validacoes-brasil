@@ -1,10 +1,14 @@
 # CONFIGURAÇÕES GERAIS
 
-## Configuração da aplicação no arquivo *core.php* e no *fmb-setup.global.php*
+##### Configurações do FMB
++ API antiga: *core.php*
++ API nova: *fmb-setup.global.php*
 
-#### Cake, Debug, Sessão e outros
+  
 
-+ **core.php**
+### Cake, Debug, Sessão e outros
+
+##### core.php
 
  >>>
     - Configure::write('debug', 2);
@@ -24,21 +28,17 @@
     - Cache::config('default', array('engine' => 'File'));
 >>>
 
-**fmb-setup.global.php**
+##### fmb-setup.global.php
 
  >>>
     'debug'                 => true,
 	'debugLogPath'          => '/home/gabriel/www/fmb/fmb_denergia_api/data/debug.log',
 	'config_cache_enabled'  => false,
-	
-	'remove_auth' => false,
-	
-	'api_antiga' => 'http://gabriel.fmb.sandbox/api/',
 >>>
 
-#### Login de usuários
+### Login e autenticação de usuários
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('DenergiaWEB.fakeLogin', false);
@@ -67,14 +67,16 @@
 	- Configure::write('DenergiaLogin.ldapSuffix', '@dcidead.local');
 >>>
 
-##### D-Users
-
-+ **fmb-setup.global.php**
+##### fmb-setup.global.php
 
 >>>
+
+    'remove_auth' => false,
+    
     'AuthComponents' => [
         'salt' => 'Dinafon - grumpsy daisy 976',
     ],
+    
     'dusers' => [
         'url' => 'http://api.dusers2.dev.fmb.intranet',
         'auth' => '/api/Auth/Login',
@@ -89,25 +91,25 @@
     ],
 >>>
 
-#####Dataload
+### Dataload
 
-+ **core.php**
+##### core.php
 >>>
     - Configure::write('DenergiaWEB.dataloadService', 'http://dseries.dcide.com.br/ws/rest/');
 >>>
 
-#####Usuário de serviço e LoginService
+### Usuário de serviço do FMB
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('Shell.userName', 'fmbtestes@dcide.com.br');
     - Configure::write('Shell.userPass', 'Dcide@2011');
 >>>
 
-####Integração CCEE
+### Registro, Ajuste e Integração CCEE
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('CceeWebservice.agentId', 120);
@@ -116,9 +118,12 @@
 	- Configure::write('CceeWebservice.password', 'v4sWyQhV');
 	- Configure::write('CceeWebservice.server', "piloto-servicos.ccee.org.br");
 	- Configure::write('CceeWebservice.username', 'piloto11');
+	
+    - Configure::write('habilitaMatchingContratosCCEE', true); 
+    - Configure::write('habilitarMenuCicloRegistroCCEE', true);
 >>>
 
-+ **fmb-setup.global.php**
+##### fmb-setup.global.php
 
 >>>
     'IntegracaoCcee' => [
@@ -134,11 +139,17 @@
             'listarContrato' => 'ws/v2/ContratoBSv2',
             'listarMontanteEnergia' => 'ws/v2/MontanteEnergiaBSv2',
         ],
+        /**
+         * Essa config será usada como base para criar um perído de 3 meses oara frente e para tras com base na
+         * no mês atual
+         */
+        'periodoMesesContrato' => 3
+    ],
 >>>
 
-#####Integração ERP
+### Integração ERP
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('erp.BillingAndPaymentRules', true);
@@ -179,26 +190,19 @@
     - Configure::write('IntegracaoErp.habilitaBotaoSincronizarEmpresaUnicaDesdeERP', true);
 >>>
 
-#####Contratos
+### Contratos
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('Contratos.habilitaCampoAutoprodutor', true);
     - Configure::write('Contratos.habilitaCampoOrdemErp', true);
-     
     - Configure::write('habilitarTemplatesContratos', true);
-     
-      Configure::write('EmailsAprovacoesContratos.bcc',
-          [
-              '<user@dcide.com.br>',
-          ]
-       );
 >>>
 
-#####Envio/Recebimento de email
+### Envio/Recebimento de email
 
-+ **core.php**
+##### core.php
 
 >>>
     Configure::write('ApiApproval.emailServer', array(
@@ -227,9 +231,9 @@
     ));
 >>>
 
-#####Configurações de aprovação
+### Configurações de aprovação
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('ApiApproval.contract_expiration',"5 days");
@@ -237,19 +241,25 @@
     - Configure::write('ApiApproval.invoice_expiration',"5 days");
     
     - Configure::write('habilitarAutoAprovacao', true);
+    
+    - Configure::write('EmailsAprovacoesContratos.bcc',
+      [
+          '<user@dcide.com.br>',
+      ]
+   );
 >>>
 
-#####Processamento Assíncrono
+### Processamento Assíncrono
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('JQueue.max_jobs', 2);
 >>>
 
-#####Api do Pool
+### Api do Pool
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('DenergiaWEB.poolService', 'https://pool.denergia.com.br/');
@@ -260,19 +270,25 @@
 	- Configure::write('DenergiaWEB.poolAuthPassword', 'Dcide@2011');
 >>>
 
-#####Integração com API nova
+### Integração entre API nova e API antiga
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('ApiLog.active', true);
     
     - Configure::write('newApiUrl','http://gabriel.fmbapi.sandbox/api/');
 >>>
+    
+##### fmb-setup.global.php
+>>>
+> 
+    - 'api_antiga' => 'http://gabriel.fmb.sandbox/api/',
+>>>
 
-#####Configurações de notificação
+### Configurações de notificação
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('pusherHash','c9fd8dab0cc0c9f539e3');
@@ -282,7 +298,7 @@
     
 >>>
 
-+ **fmb-setup.global.php**
+##### fmb-setup.global.php
 
 >>>
     'pusher' => [
@@ -294,17 +310,17 @@
 	],
 >>>
 
-#####Liquidação financeira
+### Liquidação financeira
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('Contabilizacao.rootPath', '/var/www/html/contabilizacao_v2');
 >>>
 
-#####Logos do cliente
+### Logos do cliente
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('Emails.logoUrl', 'https://attachments.dcide.info/Denergia-FMB.png');
@@ -312,9 +328,9 @@
     - Configure::write('creditNoteLogo','files/Modelo/imagem.png');
 >>>
 
-#####Template de upload para recebimentos
+### Template de upload para recebimentos
 
-+ **core.php**
+##### core.php
 
 >>>
      Configure::write('configExcelRecebimentos', [
@@ -340,9 +356,9 @@
     
 >>>
 
-#####FMB Help
+### FMB Help
 
-+ **core.php**
+##### core.php
 
 >>>
     Configure::write('FmbHelp', [
@@ -354,9 +370,9 @@
     ]);
 >>>
 
-#####Suporte Dcide
+### Suporte Dcide
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('SuporteDcide.login', 'fmb-copel');
@@ -367,43 +383,43 @@
     - Configure::write('SuporteDcide.CryptoKey', 'def00000b153735560543d617d4b432553abe0a7aef83d22faf2f49681488f05e40703f0361dbfcf1adf2ab745fd62df67812d2099bc9d5d0769c73d75521d868fcd6681');
 >>>
 
-#####Propostas
+### Propostas
 
-+ **core.php**
+##### core.php
 
 >>> 
     - Configure::write('habilitaExportacaoPropostas', true);
     - Configure::write('habilitarMenuPropostas', true);
 >>>
 
-#####Repositório de documentos
+### Repositório de documentos
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('habilitaRepositorioDocumentos', true);
 >>>
 
 
-#####Análise de Portfólio
+### Análise de Portfólio
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('habilitaAnaliseFifo', true);
 >>> 
 
-#####Medição
+### Medição
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('habilitaInsercaoMedicaoManualCopel', true);
 >>> 
 
-#####BBCE
+### BBCE
 
-+ **core.php**
+##### core.php
 
 >>>
     - Configure::write('Bbce.habilitarRedirect', true);
@@ -415,7 +431,7 @@
     - Configure::write('habilitarMenuBBCEContratos', true);
 >>> 
 
-+ **fmb-setup.global.php**
+### fmb-setup.global.php
 
 >>>
     'bbce' => [
@@ -427,29 +443,10 @@
        'cnpjParte' => '19125927000186',
      ],
 >>> 
- 
-#####Registros CCEE
 
-+ **core.php**
+### Configurações Sandbox Local
 
->>>
-    - Configure::write('habilitaMatchingContratosCCEE', true);
-    
-    - Configure::write('habilitarMenuCicloRegistroCCEE', true);
->>>
-
-#####Período de 3 meses
-
-+ **fmb-setup.global.php**
-
->>>
-    'periodoMesesContrato' => 3
-    ],
->>>
-
-#####Configurações Sandbox Local
-
-+ **fmb-setup.global.php**
+##### fmb-setup.global.php
 
 >>>
     'fmb_home'                      => '/home/gabriel/www/fmb/fmb_denergia',
@@ -462,9 +459,9 @@
 	'r_contabilizacao_path'         => '/media/hd-2/home/emmanuel/www/contabilizacao_v2',
 >>>
 
-#####Validação de Regras
+### Validação de Regras
 
-+ **fmb-setup.global.php**
+##### fmb-setup.global.php
 
 >>>
     'validation_rules' => [
@@ -480,9 +477,9 @@
 	],
 >>> 
 
-#####Estágios inicias de Faturamento, Registros, Flex e Garantia
+### Estágios inicias de Faturamento, Registros, Flex e Garantia
 
-+ **fmb-setup.global.php**
+##### fmb-setup.global.php
 
 >>>
     'initial_stages' => [
@@ -521,9 +518,9 @@
 	    ],
 >>>
 
-#####Processos e próximos estágios de Faturamento, Suprimento, Flexibilidade e Registro CCEE
+### Processos e próximos estágios de Faturamento, Suprimento, Flexibilidade e Registro CCEE
 
-+ **fmb-setup.global.php**
+##### fmb-setup.global.php
 
 >>>
     'stage_continue_process' => [
