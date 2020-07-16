@@ -4,7 +4,7 @@
 
 #### Cake, Debug, Sessão e outros
 
-**- core.php**
++ **core.php**
 
  >>>
     - Configure::write('debug', 2);
@@ -24,7 +24,7 @@
     - Cache::config('default', array('engine' => 'File'));
 >>>
 
-**- fmb-setup.global.php**
+**fmb-setup.global.php**
 
  >>>
     'debug'                 => true,
