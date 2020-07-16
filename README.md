@@ -1,16 +1,24 @@
 # CONFIGURAÇÕES GERAIS
 
 ##### Configurações do FMB
-+ API antiga: *core.php*
-+ API nova: *fmb-setup.global.php*
 
-  
++ API antiga: **core.php**
++ API nova: **fmb-setup.global.php**
+
+1. [Configuração Básica](#configuracao-basica)
+2. [Integrações](#integracoes)
+3. [Third Example](#third-example)
+4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
+
+---
+## configuracao-basica
+## Configuração Básica
 
 ### Cake, Debug, Sessão e outros
 
 ##### core.php
 
- >>>
+>>>
     - Configure::write('debug', 2);
     - Configure::write('log', true);
     - Configure::write('App.encoding', 'UTF-8');
@@ -56,11 +64,13 @@
 	- Configure::write('LoginService.hashAlgorithm', 'sha256');
 	- Configure::write('LoginService.sudoToken',"12345679");
 	
-	CAPTCHA:
+	CAPTCHA
+	
     - Configure::write('GoogleReCaptcha.ApiKeySite', '6Lf5oOcUAAAAAP4yW0RIPAVKpLNkiBos6tn0BnCE');
     - Configure::write('GoogleReCaptcha.SecretKey', '6Lf5oOcUAAAAAFrFIwdm22foV2J1rEbbhTFxMAvB');
 	
-	INTEGRAÇÃO COM AD:
+	INTEGRAÇÃO COM AD
+	
     - Configure::write('DenergiaLogin.ldapAuthenticate', false);
 	- Configure::write('DenergiaLogin.ldapDc', '192.168.0.35');
 	- Configure::write('DenergiaLogin.ldapPort', 389);
@@ -91,13 +101,6 @@
     ],
 >>>
 
-### Dataload
-
-##### core.php
->>>
-    - Configure::write('DenergiaWEB.dataloadService', 'http://dseries.dcide.com.br/ws/rest/');
->>>
-
 ### Usuário de serviço do FMB
 
 ##### core.php
@@ -105,6 +108,13 @@
 >>>
     - Configure::write('Shell.userName', 'fmbtestes@dcide.com.br');
     - Configure::write('Shell.userPass', 'Dcide@2011');
+>>>
+
+### Integração com o Dataload
+
+##### core.php
+>>>
+    - Configure::write('DenergiaWEB.dataloadService', 'http://dseries.dcide.com.br/ws/rest/');
 >>>
 
 ### Registro, Ajuste e Integração CCEE
@@ -257,6 +267,8 @@
     - Configure::write('JQueue.max_jobs', 2);
 >>>
 
+## Integracões <a name="integracoes"/>
+
 ### Api do Pool
 
 ##### core.php
@@ -400,7 +412,6 @@
     - Configure::write('habilitaRepositorioDocumentos', true);
 >>>
 
-
 ### Análise de Portfólio
 
 ##### core.php
@@ -431,7 +442,7 @@
     - Configure::write('habilitarMenuBBCEContratos', true);
 >>> 
 
-### fmb-setup.global.php
+##### fmb-setup.global.php
 
 >>>
     'bbce' => [
